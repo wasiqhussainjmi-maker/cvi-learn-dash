@@ -1,0 +1,25 @@
+{
+  "as_of": "2026-10-04",
+  "rows": [
+    {
+      "BUSINESS_UNIT": "CVI-US",
+      "invoices": 18430,
+      "total_usd": 320326627.89
+    },
+    {
+      "BUSINESS_UNIT": "CVI-IN",
+      "invoices": 862,
+      "total_usd": 5381441.82
+    },
+    {
+      "BUSINESS_UNIT": "CVI-UK",
+      "invoices": 5185,
+      "total_usd": 88517424.87
+    },
+    {
+      "BUSINESS_UNIT": "CVI-DE",
+      "invoices": 8257,
+      "total_usd": 143612186.09
+    }
+  ]
+}

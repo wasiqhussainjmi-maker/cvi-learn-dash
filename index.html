@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AP Spend by Entity</title>
+  <style>
+    body  { font-family: Arial, sans-serif; background: #f6f1e7; color: #1f2a44; padding: 24px; }
+    .card { background: white; border-radius: 10px; padding: 20px; max-width: 640px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e2d9c8; }
+    .bar  { background: #b5532a; height: 14px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>AP spend by entity</h1>
+    <p id="asof">Loading…</p>
+    <table>
+      <thead>
+        <tr><th>Entity</th><th>Invoices</th><th>Spend (USD)</th><th></th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <script>
+    async function loadDashboard() {
+      const response = await fetch("ap_by_entity.json");
+      const payload  = await response.json();
+
+      document.getElementById("asof").textContent = "Data as of " + payload.as_of;
+
+      const biggest = Math.max(...payload.rows.map(r => r.total_usd));
+
+      let html = "";
+      for (const r of payload.rows) {
+        const millions = (r.total_usd / 1000000).toFixed(1);
+        const width    = (r.total_usd / biggest) * 100;
+        html += "<tr>"
+              + "<td>" + r.BUSINESS_UNIT + "</td>"
+              + "<td>" + r.invoices.toLocaleString() + "</td>"
+              + "<td>$" + millions + "M</td>"
+              + "<td style='width:40%'><div class='bar' style='width:" + width + "%'></div></td>"
+              + "</tr>";
+      }
+      document.getElementById("rows").innerHTML = html;
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>
